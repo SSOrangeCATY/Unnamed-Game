@@ -38,4 +38,3 @@ def loading_screen(window, fade_surface, scaled_background, scaled_studio):
                 if fade_count == 0:
                     fade_count += 1
                     fade_in = True
-        pygame.display.update()
