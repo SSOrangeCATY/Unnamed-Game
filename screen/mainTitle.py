@@ -1,5 +1,4 @@
 #写出游戏的主标题界面
-import pygame
 from _main_ import scaled_background
 
     

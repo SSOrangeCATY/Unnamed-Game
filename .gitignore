@@ -1,0 +1,3 @@
+echo "*.pyc" >> .gitignore
+git add .gitignore
+git commit -m "Ignore .pyc files"

@@ -1,6 +1,8 @@
+import os
 import pygame
 from _main_ import window
 from gameSystem.ScreenSystem import screen_display_logic
+
 # 初始化pygame
 pygame.init()
 
