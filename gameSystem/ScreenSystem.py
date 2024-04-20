@@ -1,16 +1,16 @@
-import pygame
-from screen.loadingScreen import loading_screen , game_first_loading
-from screen.mainTitle import main_title
 
-def open_screen_by_id(screen_id):
-    if screen_id == 0:
-        loading_screen()
-    else:
-        print("Screen not found")
         
 def screen_display_logic(window):
-    if game_first_loading: 
-        loading_screen(window)
+    import main
+    import screen.loadingScreen
+    import screen.mainTitle
+    if main.game_first_loading is True: 
+        screen.loadingScreen.loading_screen(window)
+        #debug code
+        print("loading screen")
     else:
-        main_title(window)
-        pygame.display.update()
+        screen.mainTitle.main_title(window)
+        #debug code
+        print("main title")
+    main.game.display.update()
+   

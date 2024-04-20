@@ -1,24 +1,18 @@
-import os
-import pygame
-from _main_ import width, height, scaled_studio, scaled_background
+import main
 
-game_first_loading = True
-
-surface_image = scaled_studio
-
-fade_surface = pygame.Surface((width, height))
+surface_image = main.scaled_studio
+fade_surface = main.game.Surface((main.width, main.height))
 
 def loading_screen(window):
-    global game_first_loading, surface_image, scaled_studio, scaled_background, width, height
     fade_in = True
     fade_out = False
     fade_alpha = 255
     fade_count = 0
-    while game_first_loading:
+    while main.game_first_loading:
         if fade_count == 0:
-            surface_image = scaled_studio
+            surface_image = main.scaled_studio
         else:
-            surface_image = scaled_background
+            surface_image = main.scaled_background
             
         window.blit(surface_image, (0, 0))
         window.blit(fade_surface, (0, 0))
@@ -32,7 +26,8 @@ def loading_screen(window):
                 if fade_count == 0:
                     fade_out = True
                 else:
-                    game_first_loading = False
+                    main.game_first_loading = False
+                    print("main.game_first_loading ="+ str(main.game_first_loading))
                     
         # 渐出效果
         if fade_out:
@@ -41,6 +36,6 @@ def loading_screen(window):
             if fade_alpha >= 255:  # 当透明度为255时，停止渐出效果
                 fade_out = False
                 if fade_count == 0:
-                    fade_count += 1
+                    fade_count = 1
                     fade_in = True
-        pygame.display.update()
+        main.game.display.flip()
