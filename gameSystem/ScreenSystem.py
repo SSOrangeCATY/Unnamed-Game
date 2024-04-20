@@ -1,5 +1,3 @@
-
-        
 def screen_display_logic(window):
     import main
     import screen.loadingScreen
