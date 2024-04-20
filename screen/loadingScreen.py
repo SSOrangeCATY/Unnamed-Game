@@ -7,6 +7,7 @@ fade_out = False
 fade_alpha = 255
 fade_count = 0
 
+# 加载界面
 def loading_screen(window):
     global surface_image, fade_surface, fade_in, fade_out, fade_alpha, fade_count
     if main.game_first_loading:

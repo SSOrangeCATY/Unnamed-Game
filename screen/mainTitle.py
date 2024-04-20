@@ -20,16 +20,22 @@ def main_title(window):
     init_button(window)
     main.game.display.update()
 
+def disable_button():
+    # 卸载按钮
+    start_button.disable()
+    quit_button.disable()
+
 def init_button(window):
     # 绘制按钮
     start_button.draw(window)
     quit_button.draw(window)
     
+def button_event(event):
+    # 按钮事件处理
     # 检测鼠标点击事件
-    for event in main.game.event.get():
-        if start_button.handle_event(event):
-            # 在这里处理开始按钮被点击的事件
-            pass
-        if quit_button.handle_event(event):
-            # 在这里处理退出按钮被点击的事件
-            main.game.quit()
+    if start_button.handle_event(event):
+         # 在这里处理开始按钮被点击的事件
+        pass
+    if quit_button.handle_event(event):
+        # 在这里处理退出按钮被点击的事件
+        main.game.quit()

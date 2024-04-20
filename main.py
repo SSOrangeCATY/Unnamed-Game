@@ -1,6 +1,6 @@
 import os
 import pygame
-import gameSystem.ScreenSystem
+import gameSystem.screenSystem
 # CORE
 game = pygame
 game.init()
@@ -31,8 +31,8 @@ while running:
         if event.type == game.QUIT:
             running = False  # 停止游戏循环
             break
-            
-    gameSystem.ScreenSystem.screen_display_logic(window)
+        gameSystem.screenSystem.screen_display_logic(None,event)
+    gameSystem.screenSystem.screen_display_logic(window,None)
     
 # 退出pygame
 game.quit()

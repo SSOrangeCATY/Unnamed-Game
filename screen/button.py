@@ -13,6 +13,7 @@ class Button:
         self.height = height
         self.is_hover = False
         self.text = main.button_font.render(text, True, text_color)  # 文本
+        self.enable = True
 
     def draw(self, window):
         window.blit(self.text, (self.x + (self.width - self.text.get_width()) / 2, self.y + (self.height - self.text.get_height()) / 2))
@@ -25,8 +26,14 @@ class Button:
 
     def handle_event(self, event):
         pass
-
-
+    
+    def disable(self):
+        self.enable = False
+        
+    def enable(self):
+        self.enable = True
+        
+# 创建一个ImageButton类，继承自Button类
 class ImageButton(Button):
     def __init__(self, x, y, width, height, text='',text_color=(255, 255, 125), idle_image=None, click_image=None):
         super().__init__(x, y, width, height, text,text_color)
@@ -41,8 +48,9 @@ class ImageButton(Button):
                 main.game.draw.rect(window, (125, 125, 125), (self.x, self.y, self.width, self.height), 5)
             super().draw(window)
 
-
     def handle_event(self, event):
+        if not self.enable:
+           return False
         if event.type == main.game.MOUSEBUTTONDOWN and event.button == 1:
             if self.is_over(main.game.mouse.get_pos()):
                 if self.click_image:
@@ -71,6 +79,8 @@ class ColorButton(Button):
         super().draw(window)
 
     def handle_event(self, event):
+        if not self.enable:
+            return False
         if event.type == main.game.MOUSEBUTTONDOWN and event.button == 1:
             if self.is_over(main.game.mouse.get_pos()):
                 self.color = self.click_color
