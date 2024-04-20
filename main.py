@@ -10,6 +10,7 @@ game.font.init()
 # Video settings
 width = 1280
 height = 720
+button_font = game.font.Font(None, 30)
 
 # Game directory and Resources
 game_dir = os.path.dirname(os.path.abspath(__file__))

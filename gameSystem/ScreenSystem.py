@@ -5,10 +5,10 @@ def screen_display_logic(window):
     if main.game_first_loading is True: 
         screen.loadingScreen.loading_screen(window)
         #debug code
-        print("loading screen")
+        #print("loading screen")
     else:
         screen.mainTitle.main_title(window)
         #debug code
-        print("main title")
+        #print("main title")
     main.game.display.update()
    
