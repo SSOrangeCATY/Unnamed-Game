@@ -13,14 +13,14 @@ height = 720
 
 # Game directory and Resources
 game_dir = os.path.dirname(os.path.abspath(__file__))
-background_image = pygame.image.load(os.path.join(game_dir, 'rescouces', 'bg.png'))
-studio_image = pygame.image.load(os.path.join(game_dir, 'rescouces', 'studio.png'))
-scaled_studio = pygame.transform.scale(studio_image, (width, height))
-scaled_background = pygame.transform.scale(background_image, (width, height))
+background_image = game.image.load(os.path.join(game_dir, 'rescouces', 'bg.png'))
+studio_image = game.image.load(os.path.join(game_dir, 'rescouces', 'studio.png'))
+scaled_studio = game.transform.scale(studio_image, (width, height))
+scaled_background = game.transform.scale(background_image, (width, height))
 
 # Core variables
 running = True
-window = pygame.display.set_mode((width, height))
+window = game.display.set_mode((width, height))
 game_first_loading = True
 
 
