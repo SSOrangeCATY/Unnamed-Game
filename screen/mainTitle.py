@@ -1,10 +1,18 @@
 import main
-button_color = (255, 0, 0)  # 红色
+from screen.button import ColorButton
+
 button_width = 300
 button_height = 50
+
 button_x = main.width / 2 - button_width / 2
-button_y = main.height / 2 - button_height / 2
-button_label = main.button_font.render('start', True, (255, 255, 125))  # 白色文本
+
+start_button_y = main.height / 2 - button_height / 2 + 150
+quit_button_y = start_button_y + button_height + 30
+
+# 创建按钮实例
+start_button = ColorButton(x=button_x, y=start_button_y, width=button_width, height=button_height,text='start', text_color=(125,125,125),color=(52,134,206), click_color=(32,114,186))
+quit_button = ColorButton(x=button_x, y=quit_button_y, width=button_width, height=button_height,text='quit',color=(52,134,206), click_color=(32,114,186))
+
 # 使用main中的变量定义一个方法用于显示主标题界面
 def main_title(window):
     # 加载主标题图像
@@ -13,16 +21,15 @@ def main_title(window):
     main.game.display.update()
 
 def init_button(window):
-    global button_color, button_width, button_height, button_x, button_y, button_label
     # 绘制按钮
-    main.game.draw.rect(window, button_color, (button_x, button_y, button_width, button_height))
-    window.blit(button_label, (button_x + (button_width - button_label.get_width()) / 2, button_y + (button_height - button_label.get_height()) / 2))
+    start_button.draw(window)
+    quit_button.draw(window)
     
     # 检测鼠标点击事件
-    mouse_x, mouse_y = main.game.mouse.get_pos()
-    if button_x <= mouse_x <= button_x + button_width and button_y <= mouse_y <= button_y + button_height:
-        if main.game.mouse.get_pressed()[0]:
-            # 点击后 修改按钮的颜色
-            button_color = (0, 255, 0)
-        else:
-            button_color = (255, 0, 0)
+    for event in main.game.event.get():
+        if start_button.handle_event(event):
+            # 在这里处理开始按钮被点击的事件
+            pass
+        if quit_button.handle_event(event):
+            # 在这里处理退出按钮被点击的事件
+            main.game.quit()

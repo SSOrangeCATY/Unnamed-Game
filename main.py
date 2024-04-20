@@ -1,7 +1,6 @@
 import os
 import pygame
 import gameSystem.ScreenSystem
-
 # CORE
 game = pygame
 game.init()
@@ -28,12 +27,12 @@ game_first_loading = True
 # 游戏循环
 while running:
     # 处理事件
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+    for event in game.event.get():
+        if event.type == game.QUIT:
             running = False  # 停止游戏循环
             break
             
     gameSystem.ScreenSystem.screen_display_logic(window)
     
 # 退出pygame
-pygame.quit()
+game.quit()

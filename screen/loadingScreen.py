@@ -2,13 +2,14 @@ import main
 
 surface_image = main.scaled_studio
 fade_surface = main.game.Surface((main.width, main.height))
+fade_in = True
+fade_out = False
+fade_alpha = 255
+fade_count = 0
 
 def loading_screen(window):
-    fade_in = True
-    fade_out = False
-    fade_alpha = 255
-    fade_count = 0
-    while main.game_first_loading:
+    global surface_image, fade_surface, fade_in, fade_out, fade_alpha, fade_count
+    if main.game_first_loading:
         if fade_count == 0:
             surface_image = main.scaled_studio
         else:
