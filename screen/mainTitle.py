@@ -1,5 +1,5 @@
 from pygame import Surface
-from screen.Screen import Screen
+from screen.screen import Screen
 from screen.button import ColorButton
 import main
 class MainTitle(Screen):
@@ -10,8 +10,8 @@ class MainTitle(Screen):
         self.button_x = main.WIDTH / 2 - self.button_width / 2
         self.start_button_y = main.HEIGHT / 2 - self.button_height / 2 + 150
         self.quit_button_y = self.start_button_y + self.button_height + 30
-        self.start_button = ColorButton(self.button_x, self.start_button_y, self.button_width, self.button_height,'start', (125,125,125),(52,134,206),(32,114,186))
-        self.quit_button = ColorButton(self.button_x, self.quit_button_y, self.button_width, self.button_height,'quit',(52,134,206), (32,114,186))
+        self.start_button = ColorButton(self.button_x, self.start_button_y, self.button_width, self.button_height,'start', (255,255,255),(98,115,58),(32,114,186))
+        self.quit_button = ColorButton(self.button_x, self.quit_button_y, self.button_width, self.button_height,'quit',(255,255,255),(98,115,58), (32,114,186))
     
     def display(self,window:Surface=None,event=None):
         if(event is not None):

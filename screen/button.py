@@ -67,7 +67,7 @@ class ImageButton(Button):
 
 
 class ColorButton(Button):
-    def __init__(self, x, y, width, height, text='', text_color=(255, 255, 125), color=(25,120,25), click_color=(45,100,45)):
+    def __init__(self, x, y, width, height, text='', text_color=(255, 255, 255), color=(25,120,25), click_color=(45,100,45)):
         super().__init__(x, y, width, height,text,text_color)
         self.color = color
         self.click_color = click_color

@@ -3,7 +3,7 @@ init = False
 def screen_display_logic(window=None, event=None):
     global init
     import main
-    from screen.Screen import registryScreen
+    from screen.screen import registryScreen
     if init is False:
         main.screens = registryScreen()
         init = True

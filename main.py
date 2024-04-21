@@ -1,7 +1,7 @@
 import os
 import pygame
-import gameSystem.screenSystem
-from screen.Screen import GameScreens
+import system.screenSystem
+from screen.screen import GameScreens
 
 # CORE 别改！！
 GAME = pygame
@@ -77,8 +77,8 @@ while running:
         if event.type == GAME.QUIT:
             running = False  # 停止游戏循环
             break
-        gameSystem.screenSystem.screen_display_logic(None,event)
-    gameSystem.screenSystem.screen_display_logic(window,None)
+        system.screenSystem.screen_display_logic(None,event)
+    system.screenSystem.screen_display_logic(window,None)
     if(check_music_end()):
         play_music(main_music)
     

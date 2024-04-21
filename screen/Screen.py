@@ -10,7 +10,6 @@ class GameScreens:
 
 class Screen:
     def __init__(self):
-        
         pass 
            
     def display(self, window, event):

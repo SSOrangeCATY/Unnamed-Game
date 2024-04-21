@@ -1,8 +1,8 @@
 import main
 from pygame import Surface
-import screen.Screen
+import screen.screen
 
-class LoadingScreen(screen.Screen.Screen):
+class LoadingScreen(screen.screen.Screen):
     def __init__(self, ):
         self.surface_image = main.scaled_studio
         self.fade_surface = main.GAME.Surface((main.WIDTH, main.HEIGHT))
