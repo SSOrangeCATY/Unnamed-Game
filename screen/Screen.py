@@ -10,6 +10,7 @@ class GameScreens:
 
 class Screen:
     def __init__(self):
+        
         pass 
            
     def display(self, window, event):
@@ -26,7 +27,7 @@ class Screen:
     
     def button_event(self, event):
         pass
-
+    
 def registryScreen():
     from screen.loadingScreen import LoadingScreen
     from screen.mainTitle import MainTitle

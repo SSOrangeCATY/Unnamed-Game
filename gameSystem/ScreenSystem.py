@@ -17,5 +17,5 @@ def screen_display_logic(window=None, event=None):
         #print("main title")
         
     main.current_screen.display(window,event)
-    main.GAME.display.update()
+    main.display_update()
     
