@@ -1,11 +1,11 @@
 import main
-from screen.Screen import Screen
-from screen.mainTitle import mainTitle
+from pygame import Surface
+import screen.Screen
 
-class LoadingScreen(Screen):
-    def __init__(self):
+class LoadingScreen(screen.Screen.Screen):
+    def __init__(self, ):
         self.surface_image = main.scaled_studio
-        self.fade_surface = main.game.Surface((main.width, main.height))
+        self.fade_surface = main.GAME.Surface((main.WIDTH, main.HEIGHT))
         self.fade_in = True
         self.fade_out = False
         self.fade_alpha = 255
@@ -15,7 +15,7 @@ class LoadingScreen(Screen):
         if window is not None:
             self.draw(window)
     
-    def draw(self, window):
+    def draw(self, window: Surface):
         if main.game_first_loading:
             if self.fade_count == 0:
                 self.surface_image = main.scaled_studio
@@ -34,9 +34,9 @@ class LoadingScreen(Screen):
                         self.fade_out = True
                     else:
                         main.game_first_loading = False
-                        main.current_screen = mainTitle
-                        print("main.current_screen ="+ str(main.current_screen))
-                        print("main.game_first_loading ="+ str(main.game_first_loading))
+                        main.current_screen = main.screens.get_screen("MainTitle")
+                        #print("main.current_screen ="+ str(main.current_screen))
+                        #print("main.game_first_loading ="+ str(main.game_first_loading))
                     
             # 渐出效果
             if self.fade_out:
@@ -47,15 +47,3 @@ class LoadingScreen(Screen):
                     if self.fade_count == 0:
                         self.fade_count = 1
                         self.fade_in = True
-            main.game.display.flip()
-    
-    def init_button(self, window):
-        pass
-    
-    def disable_button(self):
-        pass
-    
-    def button_event(self, event):
-        pass
-
-loading_screen = LoadingScreen()

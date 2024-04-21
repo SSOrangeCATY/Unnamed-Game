@@ -8,7 +8,7 @@ import main
 
 def audio_system():
     if main.game_first_loading is True:
-        main.game.mixer.music.load(os.path.join(main.game_dir, 'rescouces',"audio", 'bgm.mp3'))
+        main.game.mixer.music.load(os.path.join(main.GAME_DIR, 'rescouces',"audio", 'bgm.mp3'))
         main.game.mixer.music.play(-1)
         main.game_first_loading = False
     else:

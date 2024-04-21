@@ -1,19 +1,21 @@
-
+init = False
 
 def screen_display_logic(window=None, event=None):
+    global init
     import main
-    from screen.mainTitle import mainTitle
-    from screen.loadingScreen import loading_screen
-    
+    from screen.Screen import registryScreen
+    if init is False:
+        main.screens = registryScreen()
+        init = True
     if main.game_first_loading is True: 
-        main.current_screen = loading_screen
+        main.current_screen = main.screens.get_screen("LoadingScreen")
         #debug code
         #print("loading screen")
     else :
-        main.current_screen = mainTitle
+        main.current_screen = main.screens.get_screen("MainTitle")
         #debug code
-        #print("main title")S
+        #print("main title")
         
     main.current_screen.display(window,event)
-    main.game.display.update()
+    main.GAME.display.update()
     
