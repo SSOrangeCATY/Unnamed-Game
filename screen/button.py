@@ -71,11 +71,12 @@ class ColorButton(Button):
         super().__init__(x, y, width, height,text,text_color)
         self.color = color
         self.click_color = click_color
+        self.current_color = self.color
 
     def draw(self, window):
-        main.game.draw.rect(window, self.color, (self.x, self.y, self.width, self.height))
+        main.game.draw.rect(window, self.current_color, (self.x, self.y, self.width, self.height))
         if self.is_hover is True:
-            main.game.draw.rect(window, (125, 125, 125), (self.x, self.y, self.width, self.height), 5)
+            main.game.draw.rect(window, self.click_color, (self.x, self.y, self.width, self.height), 5)
         super().draw(window)
 
     def handle_event(self, event):
@@ -83,11 +84,13 @@ class ColorButton(Button):
             return False
         if event.type == main.game.MOUSEBUTTONDOWN and event.button == 1:
             if self.is_over(main.game.mouse.get_pos()):
-                self.color = self.click_color
+                self.current_color = self.click_color
                 self.is_hover = False
                 return True
         elif self.is_over(main.game.mouse.get_pos()):
             self.is_hover = True
+            self.current_color = self.color
         else:
             self.is_hover = False
+            self.current_color = self.color
         return False

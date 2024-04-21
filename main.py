@@ -1,7 +1,7 @@
 import os
 import pygame
 import gameSystem.screenSystem
-# CORE
+# CORE 别改！！
 game = pygame
 game.init()
 game.font.init()
@@ -10,11 +10,12 @@ game.font.init()
 width = 1280
 height = 720
 button_font = game.font.Font(None, 30)
+current_screen = None
 
 # Game directory and Resources
 game_dir = os.path.dirname(os.path.abspath(__file__))
-background_image = game.image.load(os.path.join(game_dir, 'rescouces', 'bg.png'))
-studio_image = game.image.load(os.path.join(game_dir, 'rescouces', 'studio.png'))
+background_image = game.image.load(os.path.join(game_dir, 'rescouces',"image", 'bg.png'))
+studio_image = game.image.load(os.path.join(game_dir, 'rescouces',"image", 'studio.png'))
 scaled_studio = game.transform.scale(studio_image, (width, height))
 scaled_background = game.transform.scale(background_image, (width, height))
  

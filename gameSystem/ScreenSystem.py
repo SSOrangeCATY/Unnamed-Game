@@ -1,17 +1,19 @@
+
+
 def screen_display_logic(window=None, event=None):
     import main
-    import screen.mainTitle
-    import screen.loadingScreen
-    if main.game_first_loading is True and window is not None: 
-        screen.loadingScreen.loading_screen(window)
+    from screen.mainTitle import mainTitle
+    from screen.loadingScreen import loading_screen
+    
+    if main.game_first_loading is True: 
+        main.current_screen = loading_screen
         #debug code
         #print("loading screen")
-    else:
-        if window is not None:
-           screen.mainTitle.main_title(window)
-        if event is not None:
-           screen.mainTitle.button_event(event)
+    else :
+        main.current_screen = mainTitle
         #debug code
-        #print("main title")
+        #print("main title")S
+        
+    main.current_screen.display(window,event)
     main.game.display.update()
     

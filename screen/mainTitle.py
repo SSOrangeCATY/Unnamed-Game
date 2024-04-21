@@ -1,41 +1,42 @@
+from screen.Screen import Screen
 import main
-from screen.button import ColorButton
-
-button_width = 300
-button_height = 50
-
-button_x = main.width / 2 - button_width / 2
-
-start_button_y = main.height / 2 - button_height / 2 + 150
-quit_button_y = start_button_y + button_height + 30
-
-# 创建按钮实例
-start_button = ColorButton(x=button_x, y=start_button_y, width=button_width, height=button_height,text='start', text_color=(125,125,125),color=(52,134,206), click_color=(32,114,186))
-quit_button = ColorButton(x=button_x, y=quit_button_y, width=button_width, height=button_height,text='quit',color=(52,134,206), click_color=(32,114,186))
-
-# 使用main中的变量定义一个方法用于显示主标题界面
-def main_title(window):
-    # 加载主标题图像
-    window.blit(main.scaled_background, (0, 0))
-    init_button(window)
-    main.game.display.update()
-
-def disable_button():
-    # 卸载按钮
-    start_button.disable()
-    quit_button.disable()
-
-def init_button(window):
-    # 绘制按钮
-    start_button.draw(window)
-    quit_button.draw(window)
+class MainTitle(Screen):
+    def __init__(self):
+        global main
+        from screen.button import ColorButton
+        self.scaled_background = main.scaled_background
+        self.button_width = 300
+        self.button_height = 50
+        self.button_x = main.width / 2 - self.button_width / 2
+        self.start_button_y = main.height / 2 - self.button_height / 2 + 150
+        self.quit_button_y = self.start_button_y + self.button_height + 30
+        self.start_button = ColorButton(x=self.button_x, y=self.start_button_y, width=self.button_width, height=self.button_height,text='start', text_color=(125,125,125),color=(52,134,206), click_color=(32,114,186))
+        self.quit_button = ColorButton(x=self.button_x, y=self.quit_button_y, width=self.button_width, height=self.button_height,text='quit',color=(52,134,206), click_color=(32,114,186))
     
-def button_event(event):
-    # 按钮事件处理
-    # 检测鼠标点击事件
-    if start_button.handle_event(event):
-         # 在这里处理开始按钮被点击的事件
-        pass
-    if quit_button.handle_event(event):
-        # 在这里处理退出按钮被点击的事件
-        main.game.quit()
+    def display(self,window=None,event=None):
+        global main
+        if(event is not None):
+            self.button_event(event)
+        if window is not None:
+            window.blit(self.scaled_background, (0, 0))
+            self.init_button(window)
+        main.game.display.update()
+    
+    def init_button(self, window):
+        self.start_button.draw(window)
+        self.quit_button.draw(window)
+    
+    def disable_button(self):
+        self.start_button.disable()
+        self.quit_button.disable()
+        
+    def button_event(self, event):
+        global main
+        if self.start_button.handle_event(event):
+            # 在这里处理开始按钮被点击的事件
+           pass
+        if self.quit_button.handle_event(event):
+           # 在这里处理退出按钮被点击的事件
+           main.game.quit()
+
+mainTitle = MainTitle()
