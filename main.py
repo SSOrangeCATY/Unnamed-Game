@@ -2,6 +2,7 @@ import os
 import pygame
 import system.screenSystem
 from screen.screen import GameScreens
+from moviepy.editor import VideoFileClip
 
 # CORE 别改！！
 GAME = pygame
@@ -14,6 +15,7 @@ HEIGHT = 720
 button_font = GAME.font.Font(None, 30)
 current_screen = None
 screens:GameScreens = None #FIANL
+clock = GAME.time.Clock()
 
 # Audio settings
 audio_volume = 0.5
@@ -27,9 +29,11 @@ background_image = GAME.image.load(os.path.join(GAME_DIR, 'rescouces',"image", '
 studio_image = GAME.image.load(os.path.join(GAME_DIR, 'rescouces',"image", 'studio.png'))
 scaled_studio = GAME.transform.scale(studio_image, (WIDTH, HEIGHT))
 scaled_background = GAME.transform.scale(background_image, (WIDTH, HEIGHT))
-# Load music
-main_music = os.path.join(GAME_DIR, 'rescouces',"audio", 'main.mp3')
 
+# Load music
+main_music = os.path.join(GAME_DIR, 'rescouces',"audio", 'music.ogg')
+main_video_path = os.path.join(GAME_DIR, 'rescouces',"video", 'video.mp4')
+main_video = VideoFileClip(main_video_path)
 
 # Core variables
 running = True
@@ -79,7 +83,8 @@ while running:
             break
         system.screenSystem.screen_display_logic(None,event)
     system.screenSystem.screen_display_logic(window,None)
-    if(check_music_end()):
+
+    if check_music_end():
         play_music(main_music)
     
 # 退出pygame

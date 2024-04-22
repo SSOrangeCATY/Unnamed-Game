@@ -20,9 +20,14 @@ class LoadingScreen(screen.screen.Screen):
             if self.fade_count == 0:
                 self.surface_image = main.scaled_studio
             else:
-                self.surface_image = main.scaled_background  
-            window.blit(self.surface_image, (0, 0))
+                # 获取当前时间（秒），并取模视频的持续时间以实现循环播放
+                t = (main.GAME.time.get_ticks() / 1000) % main.main_video.duration
+                # 获取当前帧并显示
+                frame = main.main_video.get_frame(t)
+                self.surface_image = main.GAME.image.fromstring(frame.tostring(), frame.shape[1::-1], 'RGB')
+            window.blit(main.GAME.transform.scale(self.surface_image, (1280, 720)), (0, 0))
             window.blit(self.fade_surface, (0, 0))
+
 
             # 渐入效果
             if self.fade_in:
