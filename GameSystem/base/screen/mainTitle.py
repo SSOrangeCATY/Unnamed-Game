@@ -1,15 +1,18 @@
 from pygame import Surface
-from screen.screen import Screen
-from screen.button import ColorButton
-import main
+from GameSystem.base.screen.base.screen import Screen
+from GameSystem.base.screen.base.button import ColorButton
+from system import GAME
+from resources import resources_system , video_mainTitle
+import config
 class MainTitle(Screen):
-    def __init__(self):
+    def __init__(self,width=1280,height=720):
         # 加载视频
-        self.scaled_background = main.scaled_background
+        self.video = resources_system.get_video(video_mainTitle)
+        self.video_druation = self.video.get_duration()
         self.button_width = 300
         self.button_height = 50
-        self.button_x = main.WIDTH / 2 - self.button_width / 2
-        self.start_button_y = main.HEIGHT / 2 - self.button_height / 2 + 150
+        self.button_x = width / 2 - self.button_width / 2
+        self.start_button_y = height / 2 - self.button_height / 2 + 150
         self.quit_button_y = self.start_button_y + self.button_height + 30
         self.start_button = ColorButton(self.button_x, self.start_button_y, self.button_width, self.button_height,'start', (255,255,255),(98,115,58),(49,56,23))
         self.quit_button = ColorButton(self.button_x, self.quit_button_y, self.button_width, self.button_height,'quit',(255,255,255),(98,115,58), (49,56,23))
@@ -19,11 +22,9 @@ class MainTitle(Screen):
             self.button_event(event)
         if window is not None:
             # 获取当前时间（秒），并取模视频的持续时间以实现循环播放
-            t = (main.GAME.time.get_ticks() / 1000) % main.main_video.duration
+            t = (GAME.time.get_ticks() / 1000) % self.video_druation
             # 获取当前帧并显示
-            frame = main.main_video.get_frame(t)
-            frame_image = main.GAME.image.fromstring(frame.tostring(), frame.shape[1::-1], 'RGB')
-            window.blit(main.GAME.transform.scale(frame_image, (1280, 720)), (0, 0))
+            window.blit(self.video.get_fullscreen_video(t), (0, 0))
             self.init_button(window)
     
     def init_button(self, window):
@@ -40,4 +41,4 @@ class MainTitle(Screen):
            pass
         if self.quit_button.handle_event(event):
            # 在这里处理退出按钮被点击的事件
-           main.GAME.quit()
+           config.running = False

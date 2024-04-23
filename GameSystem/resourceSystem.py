@@ -1,24 +1,33 @@
 from enum import Enum
 import os
+from typing import Union
 from moviepy.editor import VideoFileClip
-from main import GAME , GAME_DIR
+import pygame as GAME
+from GameSystem.base.audio import Audio
+from config import GAME_DIR
+from GameSystem.base.video import Video
+from GameSystem.base.image import Image
 
 class ResourceType(Enum):
     Image = "image"
     Audio = "audio"
     Video = "video"
+    Screen = "screen"
 
 class Resource:
     def __init__(self,type:ResourceType,name:str,loaction:str=None):
         self.type = type
         self.name = name
         self.location = loaction
-    def getType(self) -> str:
-        return self.type.value
+    def getType(self) -> ResourceType:
+        return self.type
     def getName(self) -> str:
         return self.name
     def getLocation(self) -> str:
         return self.location
+    def register(self,resource_list: 'ResourceList'):
+        resource_list.add(self)
+        return self
     def __str__(self):
         return self.type.value + ":" + self.name
 
@@ -33,7 +42,8 @@ class ResourceList:
         for r in self.resources[key]:
             if r.getName() == resource.getName():
                 print("Resource already exists: " + key + ":" + resource.getName())
-            else: self.resources[key].append(resource)
+                return
+        self.resources[key].append(resource)
 
     def get(self, type: ResourceType, name: str) -> Resource:
         key = type.value
@@ -61,9 +71,9 @@ class GameResourcesList:
             if resource.getType() == ResourceType.Image:
                 try:
                     if resource.getLocation() is not None:
-                        self.loaded_resources[str(resource)] = GAME.image.load(resource.getLocation())
+                        self.loaded_resources[str(resource)] = Image(GAME.image.load(resource.getLocation()))
                     else:
-                        self.loaded_resources[str(resource)] = GAME.image.load(os.path.join(GAME_DIR, 'rescouces',resource.type.value, resource.getName()))
+                        self.loaded_resources[str(resource)] = Image(GAME.image.load(os.path.join(GAME_DIR, 'Rescouces',resource.type.value, resource.getName())))
                     return True
                 except Exception as e:
                     print("Error loading image:", e)
@@ -71,9 +81,10 @@ class GameResourcesList:
             elif resource.getType() == ResourceType.Audio:
                 try:
                     if resource.getLocation() is not None:
-                        self.loaded_resources[str(resource)] = GAME.mixer.Sound(resource.getLocation())
+                        self.loaded_resources[str(resource)] = Audio(GAME.mixer.Sound(resource.getLocation()),resource.getLocation())
                     else:
-                        self.loaded_resources[str(resource)] = GAME.mixer.Sound(os.path.join(GAME_DIR, 'rescouces',resource.type.value, resource.getName()))
+                        path = os.path.join(GAME_DIR, 'Rescouces',resource.type.value, resource.getName())
+                        self.loaded_resources[str(resource)] = Audio(GAME.mixer.Sound(path),path)
                     return True
                 except Exception as e:
                     print("Error loading audio:", e)
@@ -81,13 +92,16 @@ class GameResourcesList:
             elif resource.getType() == ResourceType.Video: 
                 try:
                     if resource.getLocation() is not None:
-                        self.loaded_resources[str(resource)] = VideoFileClip(resource.getLocation())
+                        self.loaded_resources[str(resource)] = Video(VideoFileClip(resource.getLocation()))
                     else:
-                        self.loaded_resources[str(resource)] = VideoFileClip(os.path.join(GAME_DIR, 'rescouces',resource.type.value, resource.getName()))
+                        self.loaded_resources[str(resource)] = Video(VideoFileClip(os.path.join(GAME_DIR, 'Rescouces',resource.type.value, resource.getName())))
                     return True
                 except Exception as e:
                     print("Error loading video:", e)
                     return False
+            elif resource.getType() == ResourceType.Screen:
+                print("Screen resource not supported: " + resource.getName())
+                return False
         else:
             print("Resource already loaded: " + resource.getName())
             return False
@@ -116,23 +130,44 @@ class GameResourcesList:
         return result
 
 class ResourceSystem:
-    def __init__(self):
-        self.preLoad_resourceList = ResourceList()
-        self.failLoad_resourceList = ResourceList()
+    def __init__(self,preLoad_resourceList:ResourceList=ResourceList()):
+        self.preLoad_resourceList = preLoad_resourceList
+        self.failLoad_resourceList = None
         self.loaded_resourceList = GameResourcesList()
 
-    def get_resource(self, name: str):
+    def get_resource(self, name: str) -> Union[GAME.Surface, GAME.mixer.Sound, VideoFileClip]:
         return self.loaded_resourceList.get(name)
 
-    def _load_resource(self, resourceList: ResourceList):
-        self.failLoad_resourceList = self.loaded_resourceList._registry_all(resourceList)
+    def _load_resource(self):
+        self.failLoad_resourceList = self.loaded_resourceList._registry_all(self.preLoad_resourceList)
+        return self
 
     def get_load_resource_list(self):
         return self.loaded_resourceList
-    
+
     def get_fail_load_resource_list(self):
         return self.failLoad_resourceList
+    
+    def get_image(self,image:Resource) -> Image:
+        if image.getType() == ResourceType.Image:
+            return self.get_resource(str(image))
+        else:
+            print("Resource is not an image: " + str(image))
+            return None
+        
+    def get_video(self,video:Resource) -> Video:
+        if video.getType() == ResourceType.Video:
+            return self.get_resource(str(video))
+        else:
+            print("Resource is not a video: " + str(video))
+            return None
+
+    def get_audio(self,audio:Resource) -> Audio:
+        if audio.getType() == ResourceType.Audio:
+            return self.get_resource(str(audio))
+        else:
+            print("Resource is not an audio: " + str(audio))
+            return None
 
     def __str__(self):
         return str(self.loaded_resourceList)
-    

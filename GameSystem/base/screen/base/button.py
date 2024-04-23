@@ -1,4 +1,6 @@
-import main
+import pygame
+
+from GameSystem.base.image import Image
 # 创建一个ImageButton实例
 # image_button = ImageButton(x=50, y=50, width=100, height=50, idle_image='idle.png', click_image='click.png')
 
@@ -12,7 +14,7 @@ class Button:
         self.width = width
         self.height = height
         self.is_hover = False
-        self.text = main.button_font.render(text, True, text_color)  # 文本
+        self.text = pygame.font.Font(None,30).render(text, True, text_color)  # 文本
         self.enable = True
 
     def draw(self, window):
@@ -35,29 +37,29 @@ class Button:
         
 # 创建一个ImageButton类，继承自Button类
 class ImageButton(Button):
-    def __init__(self, x, y, width, height, text='',text_color=(255, 255, 125), idle_image=None, click_image=None):
+    def __init__(self, x, y, width, height, text='',text_color=(255, 255, 125), idle_image:Image=None, click_image:Image=None):
         super().__init__(x, y, width, height, text,text_color)
-        self.idle_image = main.GAME.image.load(idle_image) if idle_image else None
-        self.click_image = main.GAME.image.load(click_image) if click_image else None
+        self.idle_image = idle_image.get_scaled_image(width, height) if idle_image else None
+        self.click_image = click_image.get_scaled_image(width, height) if click_image else None
         self.current_image = self.idle_image
 
     def draw(self, window):
         if self.current_image:
             window.blit(self.current_image, (self.x, self.y, self.width, self.height))
             if self.is_hover is True:
-                main.GAME.draw.rect(window, (125, 125, 125), (self.x, self.y, self.width, self.height), 5)
+                pygame.draw.rect(window, (125, 125, 125), (self.x, self.y, self.width, self.height), 5)
             super().draw(window)
 
     def handle_event(self, event):
         if not self.enable:
            return False
-        if event.type == main.GAME.MOUSEBUTTONDOWN and event.button == 1:
-            if self.is_over(main.GAME.mouse.get_pos()):
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if self.is_over(pygame.mouse.get_pos()):
                 if self.click_image:
                     self.current_image = self.click_image
                     self.is_hover = False
                 return True
-        elif self.is_over(main.GAME.mouse.get_pos()):
+        elif self.is_over(pygame.mouse.get_pos()):
             self.is_hover = True
         else:
             if self.idle_image:
@@ -74,20 +76,20 @@ class ColorButton(Button):
         self.current_color = self.color
 
     def draw(self, window):
-        main.GAME.draw.rect(window, self.current_color, (self.x, self.y, self.width, self.height))
+        pygame.draw.rect(window, self.current_color, (self.x, self.y, self.width, self.height))
         if self.is_hover is True:
-            main.GAME.draw.rect(window, self.click_color, (self.x, self.y, self.width, self.height), 5)
+            pygame.draw.rect(window, self.click_color, (self.x, self.y, self.width, self.height), 5)
         super().draw(window)
 
     def handle_event(self, event):
         if not self.enable:
             return False
-        if event.type == main.GAME.MOUSEBUTTONDOWN and event.button == 1:
-            if self.is_over(main.GAME.mouse.get_pos()):
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if self.is_over(pygame.mouse.get_pos()):
                 self.current_color = self.click_color
                 self.is_hover = False
                 return True
-        elif self.is_over(main.GAME.mouse.get_pos()):
+        elif self.is_over(pygame.mouse.get_pos()):
             self.is_hover = True
             self.current_color = self.color
         else:

@@ -1,11 +1,15 @@
-import main
 from pygame import Surface
-import screen.screen
+from GameSystem.base.screen.base.screen import Screen
+from resources import resources_system,video_mainTitle,image_studio
+import system
+import config
 
-class LoadingScreen(screen.screen.Screen):
-    def __init__(self, ):
-        self.surface_image = main.scaled_studio
-        self.fade_surface = main.GAME.Surface((main.WIDTH, main.HEIGHT))
+class LoadingScreen(Screen):
+    def __init__(self):
+        self.video = resources_system.get_video(video_mainTitle)
+        self.video_druation = self.video.get_duration()
+        self.surface_image = resources_system.get_image(image_studio).get_fullscreen_image()
+        self.surface = system.GAME.Surface((1280, 720))
         self.fade_in = True
         self.fade_out = False
         self.fade_alpha = 255
@@ -16,36 +20,35 @@ class LoadingScreen(screen.screen.Screen):
             self.draw(window)
     
     def draw(self, window: Surface):
-        if main.game_first_loading:
-            if self.fade_count == 0:
-                self.surface_image = main.scaled_studio
-            else:
+        if config.game_first_loading:
+            
+            if self.fade_count == 1:
                 # 获取当前时间（秒），并取模视频的持续时间以实现循环播放
-                t = (main.GAME.time.get_ticks() / 1000) % main.main_video.duration
+                t = (system.GAME.time.get_ticks() / 1000) % self.video_druation
                 # 获取当前帧并显示
-                frame = main.main_video.get_frame(t)
-                self.surface_image = main.GAME.image.fromstring(frame.tostring(), frame.shape[1::-1], 'RGB')
-            window.blit(main.GAME.transform.scale(self.surface_image, (1280, 720)), (0, 0))
-            window.blit(self.fade_surface, (0, 0))
+                self.surface_image = self.video.get_fullscreen_video(t)
+                
+            window.blit(self.surface_image, (0, 0))
+            window.blit(self.surface, (0, 0))
 
 
             # 渐入效果
             if self.fade_in:
-                self.fade_surface.set_alpha(self.fade_alpha)  # 设置透明度
+                self.surface.set_alpha(self.fade_alpha)  # 设置透明度
                 self.fade_alpha -= 1  # 逐渐减小透明度S
                 if self.fade_alpha <= 0:  # 当透明度为0时，停止渐入效果
                     self.fade_in = False
                     if self.fade_count == 0:
                         self.fade_out = True
                     else:
-                        main.game_first_loading = False
-                        main.current_screen = main.screens.get_screen("MainTitle")
+                        config.game_first_loading = False
+                        system.current_screen = system.screens.get_screen("MainTitle")
                         #print("main.current_screen ="+ str(main.current_screen))
                         #print("main.game_first_loading ="+ str(main.game_first_loading))
                     
             # 渐出效果
             if self.fade_out:
-                self.fade_surface.set_alpha(self.fade_alpha)  # 设置透明度
+                self.surface.set_alpha(self.fade_alpha)  # 设置透明度
                 self.fade_alpha += 1  # 逐渐增大透明度
                 if self.fade_alpha >= 255:  # 当透明度为255时，停止渐出效果
                     self.fade_out = False
