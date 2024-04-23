@@ -1,4 +1,4 @@
-from GameSystem.base.screen.base.screen import GameScreens
+from gameSystem.base.screen.base.screen import GameScreens
 import config
 import system
  
@@ -22,8 +22,8 @@ def screen_display_logic(window=None, event=None):
     display_update()
 
 def registryScreen():
-    from GameSystem.base.screen.loadingScreen import LoadingScreen
-    from GameSystem.base.screen.mainTitle import MainTitle
+    from gameSystem.base.screen.loadingScreen import LoadingScreen
+    from gameSystem.base.screen.mainTitle import MainTitle
     screens = GameScreens()
     screens.add_screen(LoadingScreen())
     screens.add_screen(MainTitle())

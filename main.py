@@ -1,8 +1,8 @@
 import system
 import config
 import pygame as GAME
-import GameSystem.displaySystem
-import GameSystem.soundSystem
+import gameSystem.displaySystem
+import gameSystem.soundSystem
 import resources
 
 audio_bgm =resources.resources_system.get_audio(resources.audio_bgm)
@@ -14,10 +14,10 @@ def main():
             if event.type == GAME.QUIT:
                 config.running = False  # 停止游戏循环
                 return
-            GameSystem.displaySystem.screen_display_logic(None,event)
-        GameSystem.displaySystem.screen_display_logic(system.window,None)
+            gameSystem.displaySystem.screen_display_logic(None,event)
+        gameSystem.displaySystem.screen_display_logic(system.window,None)
         
-        if GameSystem.soundSystem.check_music_end():
+        if gameSystem.soundSystem.check_music_end():
             resources.resources_system.get_audio(resources.audio_bgm).for_muisc_play()
                      
 main()

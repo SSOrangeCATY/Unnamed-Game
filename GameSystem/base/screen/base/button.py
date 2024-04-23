@@ -1,6 +1,6 @@
 import pygame
 
-from GameSystem.base.image import Image
+from gameSystem.base.image import Image
 # 创建一个ImageButton实例
 # image_button = ImageButton(x=50, y=50, width=100, height=50, idle_image='idle.png', click_image='click.png')
 

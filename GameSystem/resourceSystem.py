@@ -3,10 +3,10 @@ import os
 from typing import Union
 from moviepy.editor import VideoFileClip
 import pygame as GAME
-from GameSystem.base.audio import Audio
+from gameSystem.base.audio import Audio
 from config import GAME_DIR
-from GameSystem.base.video import Video
-from GameSystem.base.image import Image
+from gameSystem.base.video import Video
+from gameSystem.base.image import Image
 
 class ResourceType(Enum):
     Image = "image"

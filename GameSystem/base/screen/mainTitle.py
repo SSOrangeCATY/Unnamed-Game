@@ -1,6 +1,6 @@
 from pygame import Surface
-from GameSystem.base.screen.base.screen import Screen
-from GameSystem.base.screen.base.button import ColorButton
+from gameSystem.base.screen.base.screen import Screen
+from gameSystem.base.screen.base.button import ColorButton
 from system import GAME
 from resources import resources_system , video_mainTitle
 import config

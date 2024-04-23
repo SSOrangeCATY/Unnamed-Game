@@ -1,6 +1,6 @@
 import pygame as GAME
-from GameSystem.base.screen.base.screen import GameScreens, Screen
-from GameSystem.displaySystem import registryScreen
+from gameSystem.base.screen.base.screen import GameScreens, Screen
+from gameSystem.displaySystem import registryScreen
 
 GAME.init()
 

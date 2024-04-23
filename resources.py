@@ -1,4 +1,4 @@
-from GameSystem.resourceSystem import Resource, ResourceList,ResourceSystem, ResourceType
+from gameSystem.resourceSystem import Resource, ResourceList,ResourceSystem, ResourceType
 
 preLoad_resourceList = ResourceList()
 

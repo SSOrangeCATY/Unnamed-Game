@@ -1,5 +1,5 @@
 from pygame import Surface
-from GameSystem.base.screen.base.screen import Screen
+from gameSystem.base.screen.base.screen import Screen
 from resources import resources_system,video_mainTitle,image_studio
 import system
 import config
