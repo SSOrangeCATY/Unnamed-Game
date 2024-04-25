@@ -1,9 +1,12 @@
+import pygame
+
 class Screen:
     def __init__(self):
         pass 
            
-    def display(self, window, event):
-        raise NotImplementedError("Subclasses must implement the display method.")
+    def display(self, window=None,dt=None):
+        if window is not None:
+            self.draw(window,dt)
     
     def draw(self, window):
         pass
@@ -11,11 +14,15 @@ class Screen:
     def init_button(self, window):
         pass
     
-    def disable_button(self):
-        pass
-    
     def button_event(self, event):
         pass
+    
+    def event(self, event):
+        if event != None :
+            self.button_event(event)
+    
+    def __str__(self) -> str:
+        return self.__class__.__name__
     
 class GameScreens:
     def __init__(self):

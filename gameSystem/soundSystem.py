@@ -1,5 +1,6 @@
 import pygame as GAME
-
+#class SoundSystem:
+        
 def check_music_end(audio:GAME.mixer.Channel=None):
     if audio is None:
         if GAME.mixer.music.get_busy() == 0:

@@ -1,30 +1,24 @@
-from pygame import Surface
+from pygame import Surface,time
 from gameSystem.base.screen.base.screen import Screen
-from resources import resources_system,video_mainTitle,image_studio
-import system
+from resources import resources_system,res_video_mainTitle,res_img_studio
 import config
 
 class LoadingScreen(Screen):
+    
     def __init__(self):
-        self.video = resources_system.get_video(video_mainTitle)
+        self.video = resources_system.get_video(res_video_mainTitle)
         self.video_druation = self.video.get_duration()
-        self.surface_image = resources_system.get_image(image_studio).get_fullscreen_image()
-        self.surface = system.GAME.Surface((1280, 720))
+        self.surface_image = resources_system.get_image(res_img_studio).get_fullscreen_image()
+        self.surface = Surface((1280, 720))
         self.fade_in = True
         self.fade_out = False
         self.fade_alpha = 255
         self.fade_count = 0
 
-    def display(self, window, event):
-        if window is not None:
-            self.draw(window)
-    
-    def draw(self, window: Surface):
-        if config.game_first_loading:
-            
+    def draw(self, window: Surface,dt=None):
             if self.fade_count == 1:
                 # 获取当前时间（秒），并取模视频的持续时间以实现循环播放
-                t = (system.GAME.time.get_ticks() / 1000) % self.video_druation
+                t = time.get_ticks() / 1000 % self.video_druation
                 # 获取当前帧并显示
                 self.surface_image = self.video.get_fullscreen_video(t)
                 
@@ -42,7 +36,7 @@ class LoadingScreen(Screen):
                         self.fade_out = True
                     else:
                         config.game_first_loading = False
-                        system.current_screen = system.screens.get_screen("MainTitle")
+                        config.current_screen = "MainTitle"
                         #print("main.current_screen ="+ str(main.current_screen))
                         #print("main.game_first_loading ="+ str(main.game_first_loading))
                     
